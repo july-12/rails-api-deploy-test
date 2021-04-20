@@ -1,14 +1,17 @@
 # config valid for current version and patch releases of Capistrano
 lock "~> 3.16.0"
 
-server ENV['APP_SERVER'], roles: [:web, :app, :db], primary: true
+server ENV["APP_SERVER"], user: ENV["APP_SERVER_USER"], password: ENV["APP_SERVER_PASSWORD"], roles: [:web, :app, :db], primary: true
 
 set :application, "rails-api-deploy-test"
 set :repo_url, "git@github.com:july-12/rails-api-deploy-test.git"
-set :user, 'deployer'
+set :user, ENV['APP_SERVER_USER']
+
+set :bundle_config, { deployment: false } 
 
 set :puma_threads,    [4, 16]
 set :puma_workers,    0
+# set :puma_user,       fetch(:user)
 
 set :pty,             true
 set :use_sudo,        false
