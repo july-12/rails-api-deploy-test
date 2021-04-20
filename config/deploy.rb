@@ -1,7 +1,7 @@
 # config valid for current version and patch releases of Capistrano
 lock "~> 3.16.0"
 
-server ENV["APP_SERVER"], user: ENV["APP_SERVER_USER"], password: ENV["APP_SERVER_PASSWORD"], roles: [:web, :app, :db], primary: true
+server ENV["APP_SERVER"], roles: [:web, :app, :db], primary: true
 
 set :application, "rails-api-deploy-test"
 set :repo_url, "git@github.com:july-12/rails-api-deploy-test.git"
@@ -11,7 +11,9 @@ set :bundle_config, { deployment: false }
 
 set :puma_threads,    [4, 16]
 set :puma_workers,    0
-# set :puma_user,       fetch(:user)
+set :puma_user,       fetch(:user)
+set :rbenv_custom_path, "/home/#{fetch(:user)}/.rbenv"
+append :rbenv_map_bins, 'puma', 'pumactl'
 
 set :pty,             true
 set :use_sudo,        false
@@ -68,7 +70,7 @@ namespace :deploy do
   end
 
   before :starting,     :check_revision
-  after  :finishing,    :compile_assets
+  # after  :finishing,    :compile_assets
   after  :finishing,    :cleanup
   after  :finishing,    :restart
 end
@@ -94,7 +96,7 @@ end
 # set :pty, true
 
 # Default value for :linked_files is []
-# append :linked_files, "config/database.yml"
+append :linked_files, "config/database.yml", ".rbenv-vars"
 
 # Default value for linked_dirs is []
 # append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system"
