@@ -1,0 +1,7 @@
+SECRET_KEY_BASE=rake secret
+
+APP_DATABASE_USER=database user
+APP_DATABASE_PASSWORD=databse pw
+APP_SERVER=example.com
+APP_SERVER_USER=root
+APP_SERVER_PASSWORD=password
