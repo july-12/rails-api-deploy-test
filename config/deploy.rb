@@ -13,7 +13,7 @@ set :puma_threads,    [4, 16]
 set :puma_workers,    0
 set :puma_user,       fetch(:user)
 set :rbenv_custom_path, "/home/#{fetch(:user)}/.rbenv"
-append :rbenv_map_bins, 'puma', 'pumactl'
+# append :rbenv_map_bins, 'puma', 'pumactl'
 
 set :pty,             true
 set :use_sudo,        false
