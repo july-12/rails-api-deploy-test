@@ -246,3 +246,17 @@ you might still encounter some problem even throught you follow above steps very
 7. Q: nothing return after deploy finish
 
    A: maybe puma not start successfully, need to take **systemctl status puma.service** to check log. And also cause as can't open puma.access.log / puma.error.log file permission error. so need to change owner for those files by: sudo chown deployer puma.*.log. It's better setting these files to link_dir.
+   
+#### update 2021-05-04 部署OLE项目碰到的问题及修复方法
+
+1.  puma 服务启动失败问题: 
+
+     ole_backend.service 的User未设置: deployer
+     
+2.  部署https服务的配置
+     
+     https://gist.github.com/july-12/d6c27d718f0954d5c85b28f69fc573c0
+     
+3.  部署到生产环境, JWT的校验失败问题
+      - lib/json_web_token中的scret_base_key未正确统一设置: ENV[‘SCRET_BASE_KEY']
+      - [code](https://github.com/hggeorgiev/rails-jwt-auth-tutorial)
